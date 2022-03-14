@@ -1,3 +1,4 @@
+console.log("Лабораторная работа 1.");
 // ЗАДАЧА 1
 console.log(typeof(9));
 // Предположение: integer
@@ -66,22 +67,22 @@ console.log("Задача 3");
 let F = 66.2, C = 25;
 tC = 5 / 9 * (F - 32);
 tF = 9 / 5 * C + 32;
-console.log(F + '\xB0' + "F соответствует " + tC + '\xB0' + "C");
-console.log(C + '\xB0' + "C соответствует " + tF + '\xB0' + "F");
+console.log(`${F}\xB0 F соответствует ${tC}\xB0 C`);
+console.log(`${C}\xB0 C соответствует ${tF}\xB0 F`);
 
 // ЗАДАЧА 4
 console.log("Задача 4");
 let Year = prompt("Введите год:", 2022);
-alert(Year % 4 == 0 ? (Year % 100 != 0 ? "false" : "true") : "false");
+alert(Year % 4 == 0 ? (Year % 100 !== 0 ? "false" : "true") : "false");
 
 // ЗАДАЧА 5
 console.log("Задача 5");
 let N1 = 4, N2 = 6;
-console.log((N1 == 10 | N2 == 10 | N1 + N2 == 10) ? "истина" : "ложь");
+console.log((N1 == 10 || N2 == 10 || N1 + N2 == 10) ? "истина" : "ложь");
 
 // ЗАДАЧА 6
 console.log("Задача 6");
-var Sh = "";
+let Sh = "";
 let Sheeps = prompt("Введите число:", 3);
 for (let i = 1; i <= Sheeps; i++) Sh += (i + " овечка... ");
 console.log(Sh);
@@ -95,7 +96,7 @@ console.log("Задача 8");
 var Tree = "";
 for (let i = 1; i < 11; i++) {
     Tree = "";
-    for (let j = 0; j < i; j++) Tree += ((i % 2 != 0) ? '*' : '#');
+    for (let j = 0; j < i; j++) Tree += ((i % 2 !== 0) ? '*' : '#');
     console.log(Tree);
 }
 

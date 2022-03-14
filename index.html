@@ -1,11 +1,36 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="ru-RU">
 <head>
     <meta charset="UTF-8">
-    <title>Лаба 1</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Лабы 1-3</title>
 </head>
 <body>
-    <h1>Трушин Владислав Алексеевич - Лабораторная работа №1</h1>
+    <h1>Трушин Владислав Алексеевич - Лаб. работы №1-3</h1>
+    <img class="imgs" id="img1" src ="img/1.jpg">
+    <img class="imgs" id="img2" src ="img/2.jpg">
+    <img class="imgs" id="img3" src ="img/3.jpg">
+    <img class="imgs" id="img3" src ="img/4.jpg">
+    <button id="b_prev">ПРЕДЫДУЩАЯ</button>
+    <button id="b_next">СЛЕДУЮЩАЯ</button>
+    <script>
+        let IDS = document.querySelectorAll(".imgs");
+        for (let i = 1; i < IDS.length; i++) IDS[i].style.display = 'none';
+        let cur = 0;
+        document.getElementById("b_prev").onclick = function() {
+            IDS[cur].style.display = 'none';
+            cur--;
+            if (cur < 0) cur = IDS.length - 1;
+            IDS[cur].style.display = 'block';
+        };
+        document.getElementById("b_next").onclick = function() {
+            IDS[cur].style.display = 'none';
+            cur++;
+            if (cur >= IDS.length) cur = 0;
+            IDS[cur].style.display = 'block';
+        };
+    </script>
+    <script src="script.js"></script>
+    <script src="script2.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
