@@ -72,8 +72,9 @@ console.log(`${C}\xB0 C соответствует ${tF}\xB0 F`);
 
 // ЗАДАЧА 4
 console.log("Задача 4");
-let Year = prompt("Введите год:", 2022);
-alert(Year % 4 == 0 ? (Year % 100 !== 0 ? "false" : "true") : "false");
+let Year = 2022;//prompt("Введите год:", 2022);
+//alert
+console.log(Year % 4 == 0 ? (Year % 100 !== 0 ? "false" : "true") : "false");
 
 // ЗАДАЧА 5
 console.log("Задача 5");
@@ -83,7 +84,7 @@ console.log((N1 == 10 || N2 == 10 || N1 + N2 == 10) ? "истина" : "ложь
 // ЗАДАЧА 6
 console.log("Задача 6");
 let Sh = "";
-let Sheeps = prompt("Введите число:", 3);
+let Sheeps = 3;//prompt("Введите число:", 3);
 for (let i = 1; i <= Sheeps; i++) Sh += (i + " овечка... ");
 console.log(Sh);
 
@@ -93,7 +94,7 @@ for (let i = 0; i <= 15; i++) console.log(i + " " + ((i % 2 == 0) ? "четно�
 
 // ЗАДАЧА 8
 console.log("Задача 8");
-var Tree = "";
+let Tree = "";
 for (let i = 1; i < 11; i++) {
     Tree = "";
     for (let j = 0; j < i; j++) Tree += ((i % 2 !== 0) ? '*' : '#');
