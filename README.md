@@ -14,5 +14,5 @@
   <img src="https://github.com/TrushinVlad/Site2sem/blob/main/MDs/User Page.PNG?raw=true" alt="SiteScheme"/>
 </p>
 <p align="center">
-  <img src="https://github.com/TrushinVlad/Site2sem/blob/main/MDs/Edit.PNG?raw=true" alt="SiteScheme"/>
+  <img src="https://github.com/TrushinVlad/Site2sem/blob/main/MDs/Editing.PNG?raw=true" alt="SiteScheme"/>
 </p>
