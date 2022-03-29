@@ -58,9 +58,9 @@
                 <p>Дата</p>
                 <input type="date" id="date" required/>
                 <p>Город отправления</p>
-                <input type="text" id="out" required minlength="3" maxlength="50" oninput="CheckOUT();"/>
+                <input type="text" id="out" required minlength="3" maxlength="50"/>
                 <p>Город назначения</p>
-                <input type="text" id="in" required minlength="3" maxlength="50" oninput="CheckIN()"/>
+                <input type="text" id="in" required minlength="3" maxlength="50"/>
                 <p>Тип билета</p>
                 <input type="radio" name="ticket" id="ticket1" required/>
                 <label for="ticket1">Взрослый</label>
@@ -109,22 +109,22 @@
             ModalObj.style.display = "block";
             document.body.style.overflow = 'hidden';
         };
-        function CheckIN(){
+        document.getElementById("in").onblur = function(e){
             var elm = document.getElementById("in");
             var check = elm.validity;
             if (check.typeMismatch) elm.setCustomValidity("Неправильный тип у города назначения!");
-            if (check.valueMissing) elm.setCustomValidity("Заполните город назначения!");
-            if (check.tooLong) elm.setCustomValidity("Слишком длинное название у города назначения!");
-            if (check.tooShort) elm.setCustomValidity("Слишком короткое название у города назначения!");
+            //if (check.valueMissing) elm.setCustomValidity("Заполните город назначения!");
+            //if (check.tooLong) elm.setCustomValidity("Слишком длинное название у города назначения!");
+            //if (check.tooShort) elm.setCustomValidity("Слишком короткое название у города назначения!");
         }
-        function CheckOUT(){
+        document.getElementById("out").onblur = function(e) {
             var elm = document.getElementById("out");
             var check = elm.validity;
             if (check.typeMismatch) elm.setCustomValidity("Неправильный тип у города отправления!");
-            if (check.valueMissing) elm.setCustomValidity("Заполните город отправления!");
-            if (check.tooLong) elm.setCustomValidity("Слишком длинное название у города отправления!");
-            if (check.tooShort) elm.setCustomValidity("Слишком короткое название у города отправления!");
-        }
+            //if (check.valueMissing) elm.setCustomValidity("Заполните город отправления!");
+            //if (check.tooLong) elm.setCustomValidity("Слишком длинное название у города отправления!");
+            //if (check.tooShort) elm.setCustomValidity("Слишком короткое название у города отправления!");
+        };
         document.getElementById("modButSend").onclick = function(e) {
             if (document.getElementById("date").validity.valid
             && document.getElementById("in").validity.valid
