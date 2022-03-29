@@ -23,15 +23,29 @@ console.log(IsPalindrome("кружка"));
 
 // ЗАДАЧА 3
 function matrixAddition(mA, mB){
-    if ((mA[0].length != mB[0].length) || (mA.length != mB.length)) return "Миссия НЕВЫПОЛНИМА";
-    let mC = new Array(mA.length);
+    let mC;
+    if ((mA[0].length != mB[0].length) || (mA.length != mB.length))
+    {
+        mC = new Array(0);
+        return mC;
+    }
+    mC = new Array(mA.length);
     for (let i = 0; i < mA.length; i++) mC[i] = new Array(mB.length);
     for (let i = 0; i < mA.length; i++)
         for (let j = 0; j < mB[0].length; j++) mC[i][j] = mA[i][j] + mB[i][j];
     return mC;
 }
-console.log(matrixAddition([[1,2],[3,4]], [[9,8],[7,6]]));
-console.log(matrixAddition([[1,2]], [[9,8],[7,6]]));
+function MatrixOUT(mC){
+    if (mC.length == 0) return "Миссия НЕВЫПОЛНИМА";
+    let s = "";
+    for (let i = 0; i < mC.length; i++){
+        for (let j = 0; j < mC[0].length; j++) s += mC[i][j] + "\t";
+        s += "\n"
+    }
+    return s;
+}
+console.log(MatrixOUT(matrixAddition([[1,2],[3,4]], [[9,8],[7,6]])));
+console.log(MatrixOUT(matrixAddition([[1,2]], [[9,8],[7,6]])));
 
 // ЗАДАЧА 4
 let student = {
