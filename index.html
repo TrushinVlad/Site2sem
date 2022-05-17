@@ -1,169 +1,64 @@
 <!DOCTYPE html>
-<html lang="ru-RU">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Лабы 1-5</title>
-    <style>
-        .imgs {
-            width: 400px;
-        }
-
-        .modW {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .mod {
-            background-color: white;
-            width: 350px;
-            height: 370px;
-            margin: auto;
-            border-style: solid;
-        }
-
-        input {
-            border-style: double;
-        }
-
-        input:invalid {
-            border-color: red;
-            box-shadow: 0 0 5px 1px red;
-        }
-
-        input:invalid:required {
-            border-color: red;
-            box-shadow: 0 0 5px 1px red;
-        }
-    </style>
+    <title>Node.js</title>
+    <meta charset="utf-8" />
 </head>
-
 <body>
-    <h1>Трушин Владислав Алексеевич - Лаб. работы №1-5</h1>
-    <img class="imgs" id="img1" src="img/1.jpg" alt="">
-    <img class="imgs" id="img2" src="img/2.jpg" alt="">
-    <img class="imgs" id="img3" src="img/3.jpg" alt="">
-    <img class="imgs" id="img4" src="img/4.jpg" alt="">
-    <button id="b_prev">ПРЕДЫДУЩАЯ</button>
-    <button id="b_next">СЛЕДУЮЩАЯ</button>
-    <button id="modBut">Открыть модальное окно</button>
-    <button id="APIbutt">Послать запрос</button>
-    <!--Вариант 5-->
-    <div id="modalW" class="modW">
-        <div class="mod">
-            <form id="Form1" style="margin: 0 50px">
-                <p>Дата</p>
-                <input type="date" id="date" required />
-                <p>Город отправления</p>
-                <input type="text" id="out" required minlength="3" maxlength="50" />
-                <p>Город назначения</p>
-                <input type="text" id="in" required minlength="3" maxlength="50" />
-                <p>Тип билета</p>
-                <input type="radio" name="ticket" id="ticket1" required />
-                <label for="ticket1">Взрослый</label>
-                <input type="radio" name="ticket" id="ticket2" required />
-                <label for="ticket2">Детский</label>
-                <p><button id="modalButClose">Закрыть</button></p>
-                <p><input id="modButSend" type="submit" /></p>
-            </form>
+    <h1>Cover</h1>
+
+    <form method="POST" action="/cover-download" enctype="multipart/form-data">
+        <div>
+            <input type="text" name="CardName">
+            <input type="text" name="Description">
+            <label>Choose a cover image:</label>
+            <input type="file" name="Cover" />
+
         </div>
-    </div>
+        <div>
+            <input type="submit" name="btn_upload_cover_photo" value="Upload" />
+        </div>
+    </form>
+	
+	<h1>MODELS</h1>
 
-    <script>
-        document.getElementById("APIbutt").onclick = function () {
-            let r = fetch('https://the-dune-api.herokuapp.com/quotes/4')
-            let rr = r.then((res) => { return res.json(); });
-            rr.then((data) => {
-                console.log(data);
-                console.log(data.length);
-                document.write("<p>Ответы</p>")
-                for (let i = 0; i < data.length; i++)
-                    document.write("<p style=\"border: 1px solid black; padding: 5px;\">" + data[i].id + ": " + data[i].quote + "</p>")
-            });
-            r.catch((e) => { alert("Ошибка на стадии 1!"); });
-            rr.catch((e) => { alert("Ошибка на стадии 2!"); });
-            r.finally((e) => { alert("Ответ получен!"); });
-        }
+    <form method="POST" action="/Model-download" enctype="multipart/form-data">
+        <div>
+            <labelChoose models:</label>
+            <input type="file" name="Model" multiple/>
+        </div>
+        <div>
+            <input type="submit" name="btn_upload_cover_model" value="Upload" />
+        </div>
+    </form>
+	
+	<h1>Description</h1>
 
-        let ModalObj = document.getElementById("modalW");
-        let ModalFClose = function (e) {
-            document.body.style.overflow = 'visible';
-            ModalObj.style.display = "none";
-            return false;
-        }
-        ModalFClose();
-        ModalObj.onclick = function (e) {
-            if (e && e.target == ModalObj) {
-                document.body.style.overflow = 'visible';
-                ModalObj.style.display = "none";
-                return false;
-            }
-        };
-        document.getElementById("modalButClose").onclick = ModalFClose;
-        document.getElementById("modBut").onclick = function () {
-            ModalObj.style.display = "block";
-            document.body.style.overflow = 'hidden';
-        };
-        document.getElementById("in").onblur = function (e) {
-            var elm = document.getElementById("in");
-            var check = elm.validity;
-            if (check.typeMismatch) elm.setCustomValidity("Неправильный тип у города назначения!");
-            if (check.valueMissing) elm.setCustomValidity("Заполните город назначения!");
-            //if (check.tooLong) elm.setCustomValidity("Слишком длинное название у города назначения!");
-            //if (check.tooShort) elm.setCustomValidity("Слишком короткое название у города назначения!");
-        }
-        document.getElementById("out").onblur = function (e) {
-            var elm = document.getElementById("out");
-            var check = elm.validity;
-            if (check.typeMismatch) elm.setCustomValidity("Неправильный тип у города отправления!");
-            //if (check.valueMissing) elm.setCustomValidity("Заполните город отправления!");
-            //if (check.tooLong) elm.setCustomValidity("Слишком длинное название у города отправления!");
-            //if (check.tooShort) elm.setCustomValidity("Слишком короткое название у города отправления!");
-        };
-        document.getElementById("modButSend").onclick = function (e) {
-            if (document.getElementById("date").validity.valid
-                && document.getElementById("in").validity.valid
-                && document.getElementById("out").validity.valid
-                && document.getElementById("ticket1").validity.valid){
-                let objs = {
-                    date: document.getElementById("date").value,
-                    out: document.getElementById("out").value,
-                    in: document.getElementById("in").value,
-                    type: document.getElementById("ticket1").checked ? "Взрослый" : "Детский"
-                };//, , , };
-            console.table(objs);
-            return false;
-            //e.preventDefault();
-                }
-        };
+    <form method="POST" action="/Body-download" enctype="multipart/form-data">
+        <div>
+            <input type="text" name="Foreword">
+            <input type="text" name="DescriptionInstructions">
+			<input type="text" name="Postscript">
+            <label>Select your profile picture:</label>
+            <input type="file" name="Body" multiple/>
 
-        let IDS = document.querySelectorAll(".imgs");
-        if (IDS.length > 0) IDS[0].style.display = 'block';
-        for (let i = 1; i < IDS.length; i++) IDS[i].style.display = 'none';
-        let cur = 0;
-        document.getElementById("b_prev").onclick = function () {
-            IDS[cur].style.display = 'none';
-            cur--;
-            if (cur < 0) cur = IDS.length - 1;
-            IDS[cur].style.display = 'block';
-        };
-        document.getElementById("b_next").onclick = function () {
-            IDS[cur].style.display = 'none';
-            cur++;
-            if (cur >= IDS.length) cur = 0;
-            IDS[cur].style.display = 'block';
-        };
-    </script>
-    <script src="script.js"></script>
-    <script src="script2.js"></script>
+        </div>
+        <div>
+            <input type="submit" name="btn_upload_cover_body" value="Upload" />
+        </div>
+    </form>
+	
+<!--
+    <form method="POST" action="/upload-multiple-images" enctype="multipart/form-data">
+        <div>           
+            <label>Select multiple images:</label>
+            <input type="file" name="multiple_images" multiple />  <!--multiple позволяет загружать много изображений
+        </div>
+        <div>
+            <input type="submit" name="btn_upload_multiple_images" value="Upload" />
+        </div>
+    </form>
+      -->
+
 </body>
-
-</html>
+<html>
