@@ -4,16 +4,19 @@
   "description": "node app ",
   "main": "app.js",
   "scripts": {
-  "start": "node app.js"
-},
+    "start": "node app.js"
+  },
   "repository": {
-  "type": "git",
-  "url": ""
-},
+    "type": "git",
+    "url": "git+https://github.com/TrushinVlad/Site2sem.git"
+  },
   "author": "",
   "license": "ISC",
+  "homepage": "https://github.com/TrushinVlad/Site2sem#readme",
   "bugs": {
-  "url": ""
-},
-  "homepage": ""
+    "url": "https://github.com/TrushinVlad/Site2sem/issues"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
 }
