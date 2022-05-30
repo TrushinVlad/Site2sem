@@ -3,78 +3,105 @@ const express = require('express');
 const { json } = require('express/lib/response');
 const router = express.Router();
 
+const jsonParser = express.json();
+router.route('/:id')
+  .get((req, res) => {
+    console.log('Request Type:', req.method);
+    console.log('Запрос на получение юзера: ' + req.params.id);
+    if (req.params.id == 'all') {
+      console.log("(запрос на все)");
+      let r = GetUsers();
+      r
+        .then(
+          result => res.send("{\"status\": \"0\", \"data\": " + JSON.stringify(result) + "}"),
+          error => res.send("{\"status\": \"1\", \"data\": \"null\"}")
+        );
+    }
+    else {
+      let r = GetUser(req.params.id);
+      r
+        .then(
+          result => res.send("{\"status\": \"0\", \"data\": " + JSON.stringify(result) + "}"),
+          error => res.send("{\"status\": \"1\", \"data\": \"null\"}")
+        );
+    }
+  })
+  .put(jsonParser, (req, res) => {
+    console.log('Request Type:', req.method);
+    console.log('Запрос на изменение юзера: ' + req.params.id);
+    let r = UpdateUser(req.body.Name, req.params.id, req.body.EmailSec, req.body.Achiv, req.body.Info);
+      r
+        .then(
+          result => res.send("{\"status\": \"0\", \"data\": " + JSON.stringify(result) + "}"),
+          error => res.send("{\"status\": \"1\", \"data\": \"null\"}")
+        );
+  })
+  .delete(jsonParser, (req, res) => {
+    console.log('Request Type:', req.method);
+    console.log('Запрос на удаление юзера: ' + req.params.id);
+    let r = DeleteUser(req.params.id);
+      r
+        .then(
+          result => res.send("{\"status\": \"0\", \"data\": " + JSON.stringify(result) + "}"),
+          error => res.send("{\"status\": \"1\", \"data\": \"null\"}")
+        );
+  });
+
 router.use('/:id/edit', function (req, res) {
   console.log('Request Type:', req.method);
-  console.log('Редактирование: ' + req.params.id);
+  console.log('id/edit: ' + req.params.id);
+  let r = GetUser(req.params.id);//Это дополнительный запрос - если юзера не оказалось в базе данных, то вместо страницы просмотра показывается ошибка.
+  r
+    .then(
+      result => result.length == 1 ? res.sendFile(__dirname + '\\edit.html') : res.sendFile(__dirname + '\\error.html'),
+      error => res.sendFile(__dirname + '\\error.html')
+    );
 });
 
-router.use('/:id', function (req, res) {
-  console.log('Request Type:', req.method);
-  if (req.params.id == 'all') {
-    console.log("Запрос на все");
-    let r = GetUsers();
-    r
-      .then(
-        result => res.send("{\"status\": \"0\", \"data\": " + JSON.stringify(result) + "}"),
-        error => res.send("{\"status\": \"1\", \"data\": \"null\"}")
-      );
-  }
-  else {
-    console.log("Запрос на модель " + req.params.id);
-    let r = GetUser(req.params.id);
-    r
-      .then(
-        result => res.send(
-          `<!DOCTYPE html>
-<html>
-	<head>
-		<title>Главная</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-		<meta charset="utf-8" />
-	</head>
-	<body style="margin: 10px 10px;">
-        <h1>` + result[0].Name + ` [` + result[0].ID + `]</h1>
-        <h3>Контакты</h3>
-		<p>Почта: ` + result[0].Email + `</p>
-		<p>Доп. почта: ` + result[0].EmailSec + `</p>
-        <h4>Информация</h4>
-		<p>` + result[0].Info + `</p>
-        <h4>Дополнительные достижения</h4>
-		<p>` + result[0].Achievements + `</p>
-        <button type="button" class="btn btn-info" onclick="location.href='/'">Назад</button>
-        <button type="submit" class="btn btn-info" id="Edit" onclick="location.href='/users/` + result[0].ID + `/edit'">Редактировать</button>
-	</body>
-</html>`
-
-        ),
-        error => res.send(
-          `<!DOCTYPE html>
-        <html>
-        <head>
-            <title>Главная</title>
-            <meta charset="utf-8" />
-        </head>
-        <h1>`
-          + req.baseUrl +
-          `</h1>
-        <h2>`
-          + req.method +
-          `</h2>
-        <h3>`
-          + req.baseUrl.substring(req.baseUrl.lastIndexOf('/') + 1) +
-          `</h3>
-        <body><h1>Запрос на конкретную модель</h1></body>
-        </html>`
-        )
-      );
-
-  }
+router.use('/:id/view', function (req, res) {
+  console.log('Просмотр юзера', req.params.id);
+  let r = GetUser(req.params.id);//Это дополнительный запрос - если юзера не оказалось в базе данных, то вместо страницы просмотра показывается ошибка.
+  r
+    .then(
+      result => result.length == 1 ? res.sendFile(__dirname + '\\view.html') : res.sendFile(__dirname + '\\error.html'),
+      error => res.sendFile(__dirname + '\\error.html')
+    );
 });
 
 
 const supabaseUrl = 'https://dasnewjdyuqoqsntatue.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhc25ld2pkeXVxb3FzbnRhdHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE1NjAwNDksImV4cCI6MTk2NzEzNjA0OX0.Y1Us9nD1c0rJS4Tdh5HGGufsD4q9PkGrmxJo1u78dx4'
 const supabase = supb.createClient(supabaseUrl, supabaseKey)
+
+UpdateUser = async function (name, id, email2, achiv, info){
+  const resp = await supabase
+  .from('User')
+  .update({ Name: name, EmailSec: email2, Achievements: achiv, Info: info })
+  .eq('ID', id);
+  if (resp.error == null) {
+    console.log("Юзер успешно изменен");
+    return 0;
+  }
+  else {
+    console.log("Юзер не изменен (хз поч).");
+    return 1;
+  }
+}
+
+DeleteUser = async function (id) {
+  const resp = await supabase
+  .from('User')
+  .delete()
+  .eq('ID', id);
+  if (resp.error == null) {
+    console.log("Юзер успешно удален");
+    return 0;
+  }
+  else {
+    console.log("Юзер не удален (хз поч).");
+    return 1;
+  }
+}
 
 AddUser = async function (name, email, email2, achiv, info) {
   const resp = await supabase
@@ -97,7 +124,7 @@ GetUser = async function (id) {
   let { data: User, error } = await supabase
     .from('User')
     .select('*')
-    .match({ID: id});
+    .match({ ID: id });
   console.log(User);
   return User;
 }

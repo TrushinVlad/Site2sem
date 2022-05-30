@@ -25,7 +25,7 @@
                 console.log(data.data.length);
                 if (data.status == 0){
                     for (let i = 0; i < data.data.length; i++)
-                        list.insertAdjacentHTML('afterend', "<div class=\"card\"><div class=\"cardin\"><div><p class=\"card_client_title\">" + data.data[i].Name + "</p><p class=\"card_client_mail\">" + data.data[i].Email + "</p></div><div style=\"margin: 10px;\"><button type=\"button\" class=\"btn btn-info\" onclick=\"location.href='/users/" + data.data[i].ID +"'\">Посмотреть профиль</button></div></div></div>");
+                        list.insertAdjacentHTML('afterend', "<div class=\"card\"><div class=\"cardin\"><div><p class=\"card_client_title\">" + data.data[i].Name + "</p><p class=\"card_client_mail\">" + data.data[i].Email + "</p></div><div style=\"margin: 10px;\"><button type=\"button\" class=\"btn btn-info\" onclick=\"location.href='/users/" + data.data[i].ID +"/view'\">Посмотреть профиль</button></div></div></div>");
                 }
             });
 
